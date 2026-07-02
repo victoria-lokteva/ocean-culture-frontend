@@ -1,0 +1,27 @@
+venv/
+.env
+.venv
+__pycache__/
+*.pyc
+__pycache__
+*.json
+*.pdf
+resumes/
+resumes_test/
+temp_folder/
+*.docx
+*.doc
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
