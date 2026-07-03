@@ -48,3 +48,21 @@ fetch(API)
 .catch(error => {
     console.error(error);
 });
+
+const container = document.querySelector(".map-container");
+const button = document.getElementById("fullscreen-btn");
+
+button.addEventListener("click", async () => {
+
+    if (!document.fullscreenElement) {
+        await container.requestFullscreen();
+    } else {
+        await document.exitFullscreen();
+    }
+
+    map.invalidateSize();
+});
+
+document.addEventListener("fullscreenchange", () => {
+    map.invalidateSize();
+});
