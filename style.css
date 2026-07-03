@@ -584,26 +584,26 @@ h1, h2{
   .critter--lontra{
     left: 1.8vw;
     top: 14vh;
-    width: 108px;
-    height: 77px;
+    width: 216px;
+    height: 154px;
   }
   .critter--delfin{
     right: 1.8vw;
     top: 30vh;
-    width: 128px;
-    height: 88px;
+    width: 256px;
+    height: 172px;
   }
   .critter--medusa{
     left: 2vw;
     top: 54vh;
-    width: 92px;
-    height: 132px;
+    width: 184px;
+    height: 264px;
   }
   .critter--seal{
     right: 1.6vw;
     bottom: 5vh;
-    width: 140px;
-    height: 96px;
+    width: 280px;
+    height: 192px;
   }
 }
 
