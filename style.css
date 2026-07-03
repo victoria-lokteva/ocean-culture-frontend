@@ -1,6 +1,5 @@
-/* ---------------------------------------------------
-   Tokens
---------------------------------------------------- */
+/* Tokens */
+
 :root{
   --color-abyss: #0B2E38;
   --color-ocean: #12586E;
@@ -490,54 +489,42 @@ h1, h2{
     position: fixed;
     z-index: 3;
     pointer-events: none;
-    filter: drop-shadow(0 12px 20px rgba(11,46,56,0.22));
-    animation: critter-float 7s ease-in-out infinite;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 18px rgba(11,46,56,0.18));
   }
 
   .critter--lontra{
-    left: 1.6vw;
-    top: 16vh;
+    left: 1.8vw;
+    top: 14vh;
     width: 108px;
-    animation-delay: 0s;
+    height: 77px;
   }
   .critter--delfin{
-    right: 1.6vw;
-    top: 32vh;
+    right: 1.8vw;
+    top: 30vh;
     width: 128px;
-    animation-delay: 1.2s;
-    animation-duration: 8s;
+    height: 88px;
   }
   .critter--medusa{
-    left: 1.8vw;
-    top: 58vh;
+    left: 2vw;
+    top: 54vh;
     width: 92px;
-    animation-delay: 2.4s;
-    animation-duration: 9s;
+    height: 132px;
   }
   .critter--seal{
-    right: 1.4vw;
-    top: 80vh;
+    right: 1.6vw;
+    bottom: 5vh;
     width: 140px;
-    animation-delay: 0.6s;
-    animation-duration: 7.5s;
+    height: 96px;
   }
 }
 
 /* Extra breathing room once the viewport is wide enough for bigger creatures */
 @media (min-width: 1760px){
-  .critter--lontra{ width: 128px; left: 2.2vw; }
-  .critter--delfin{ width: 150px; right: 2.2vw; }
-  .critter--medusa{ width: 108px; left: 2.4vw; }
-  .critter--seal{ width: 164px; right: 2vw; }
-}
-
-@keyframes critter-float{
-  0%, 100%{ transform: translateY(0); }
-  50%{ transform: translateY(-14px); }
-}
-
-@media (prefers-reduced-motion: reduce){
-  .critter{ animation: none; }
+  .critter--lontra{ width: 128px; height: 91px; left: 2.4vw; }
+  .critter--delfin{ width: 150px; height: 103px; right: 2.4vw; }
+  .critter--medusa{ width: 108px; height: 155px; left: 2.6vw; }
+  .critter--seal{ width: 164px; height: 112px; right: 2.2vw; }
 }
 
 /* ---------------------------------------------------
