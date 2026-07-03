@@ -477,6 +477,70 @@ h1, h2{
 }
 
 /* ---------------------------------------------------
+   Side critters — decorative, large-viewport only
+--------------------------------------------------- */
+.sea-critters{
+  display: none;
+}
+
+@media (min-width: 1500px){
+  .sea-critters{ display: block; }
+
+  .critter{
+    position: fixed;
+    z-index: 3;
+    pointer-events: none;
+    filter: drop-shadow(0 12px 20px rgba(11,46,56,0.22));
+    animation: critter-float 7s ease-in-out infinite;
+  }
+
+  .critter--lontra{
+    left: 1.6vw;
+    top: 16vh;
+    width: 108px;
+    animation-delay: 0s;
+  }
+  .critter--delfin{
+    right: 1.6vw;
+    top: 32vh;
+    width: 128px;
+    animation-delay: 1.2s;
+    animation-duration: 8s;
+  }
+  .critter--medusa{
+    left: 1.8vw;
+    top: 58vh;
+    width: 92px;
+    animation-delay: 2.4s;
+    animation-duration: 9s;
+  }
+  .critter--seal{
+    right: 1.4vw;
+    top: 80vh;
+    width: 140px;
+    animation-delay: 0.6s;
+    animation-duration: 7.5s;
+  }
+}
+
+/* Extra breathing room once the viewport is wide enough for bigger creatures */
+@media (min-width: 1760px){
+  .critter--lontra{ width: 128px; left: 2.2vw; }
+  .critter--delfin{ width: 150px; right: 2.2vw; }
+  .critter--medusa{ width: 108px; left: 2.4vw; }
+  .critter--seal{ width: 164px; right: 2vw; }
+}
+
+@keyframes critter-float{
+  0%, 100%{ transform: translateY(0); }
+  50%{ transform: translateY(-14px); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .critter{ animation: none; }
+}
+
+/* ---------------------------------------------------
    Recursos page — compact hero
 --------------------------------------------------- */
 .site-nav a.is-active{
