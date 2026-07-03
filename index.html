@@ -1,23 +1,119 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Ocean Culture Map</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cultura Oceánica · Fundación CIDEMAR</title>
+<meta name="description" content="Un mapa vivo de fundaciones, ONGs y redes que trabajan por la cultura oceánica en Chile.">
 
-    <link rel="stylesheet"
-          href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>a
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h2>Ocean Culture Organizations</h2>
+<header class="site-header" id="siteHeader">
+  <a class="brand" href="#top">
+    <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+      <path d="M4 24c4-6 8-6 12 0s8 6 12 0s8-6 12 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M4 30c4-6 8-6 12 0s8 6 12 0s8-6 12 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+    </svg>
+    <span>Cultura Oceánica</span>
+  </a>
+  <nav class="site-nav">
+    <a href="#nosotros">Sobre nosotros</a>
+    <a href="#mapa">Mapa</a>
+  </nav>
+</header>
 
-<div id="map"></div>
+<main id="top">
+
+  <section class="hero">
+    <div class="hero-coastline" aria-hidden="true">
+      <svg viewBox="0 0 200 900" preserveAspectRatio="none">
+        <path d="M100 0 C 40 60, 160 120, 90 200 S 30 340, 110 420 S 170 560, 80 640 S 40 780, 120 900"
+              fill="none" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <div class="hero-content">
+      <p class="eyebrow">Fundación CIDEMAR</p>
+      <h1>Cultura<br>oceánica</h1>
+      <p class="hero-lede">Un mapa vivo de las fundaciones, ONGs y redes que trabajan,
+        educan y difunden por el mar chileno &mdash; de norte a sur.</p>
+      <a class="cta" href="#mapa">
+        <span>Explorar el mapa</span>
+        <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 2v11M3 9l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <svg class="hero-wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,64 C 240,110 480,10 720,50 C 960,90 1200,20 1440,60 L1440,120 L0,120 Z" fill="var(--color-foam)"/>
+    </svg>
+  </section>
+
+  <section class="about" id="nosotros">
+    <div class="about-text reveal">
+      <p class="eyebrow eyebrow--dark">Sobre nosotros</p>
+      <h2>Somos Fundación CIDEMAR</h2>
+      <p>Trabajamos en la divulgación de las ciencias del mar, la educación ambiental y la
+        gestión de zonas costeras. Este sitio nació como un ejercicio simple: reunir, en un
+        mismo lugar, a las personas y organizaciones que ya están construyendo cultura
+        oceánica en Chile &mdash; para que sean más fáciles de encontrar, y más fáciles de
+        conectar entre sí.</p>
+      <p>Es un directorio en crecimiento. Si conoces una organización que debería estar
+        aquí, o eres parte de una, escríbenos.</p>
+      <a class="link-inline" href="mailto:contacto@cidemar.org">contacto@cidemar.org</a>
+
+      <dl class="about-stats" id="aboutStats" aria-live="polite">
+        <div class="stat">
+          <dt>Organizaciones</dt>
+          <dd id="statCount">&mdash;</dd>
+        </div>
+        <div class="stat">
+          <dt>Regiones costeras</dt>
+          <dd id="statCities">&mdash;</dd>
+        </div>
+      </dl>
+    </div>
+    <div class="about-graphic reveal" aria-hidden="true">
+      <svg viewBox="0 0 300 420">
+        <path d="M150 0 C 90 70, 220 140, 140 220 S 60 340, 150 420"
+              fill="none" stroke="var(--color-kelp)" stroke-width="3"/>
+        <circle cx="150" cy="0" r="5" fill="var(--color-sand)"/>
+        <circle cx="140" cy="220" r="5" fill="var(--color-ocean)"/>
+        <circle cx="150" cy="420" r="5" fill="var(--color-kelp)"/>
+      </svg>
+    </div>
+  </section>
+
+  <section class="map-section" id="mapa">
+    <div class="map-intro reveal">
+      <p class="eyebrow eyebrow--dark">El mapa</p>
+      <h2>Encuentra organizaciones</h2>
+      <p>Toca un punto en el mapa para ver de qué se trata cada organización, o filtra por
+        tipo usando las categorías de abajo.</p>
+    </div>
+
+    <div class="legend" id="legend"></div>
+
+    <div class="map-wrap reveal">
+      <div id="map"></div>
+      <p class="map-status" id="mapStatus">Cargando organizaciones…</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Fundación CIDEMAR &middot; Cultura Oceánica &middot; Chile</p>
+</footer>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="app.js"></script>
-
 </body>
 </html>
