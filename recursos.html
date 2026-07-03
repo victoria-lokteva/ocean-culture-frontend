@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recursos de Cultura Oceánica · Fundación CIDEMAR</title>
+<meta name="description" content="Índice de normativa, investigación, redes y material educativo sobre cultura oceánica en Chile, del Grupo de Trabajo Cultura Oceánica (GT COCEAN, CONA).">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header" id="siteHeader">
+  <a class="brand" href="index.html">
+    <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+      <path d="M4 24c4-6 8-6 12 0s8 6 12 0s8-6 12 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M4 30c4-6 8-6 12 0s8 6 12 0s8-6 12 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+    </svg>
+    <span>Cultura Oceánica</span>
+  </a>
+  <nav class="site-nav">
+    <a href="index.html#nosotros">Sobre nosotros</a>
+    <a href="index.html#mapa">Mapa</a>
+    <a href="recursos.html" class="is-active">Recursos</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <p class="eyebrow">GT Cultura Oceánica &middot; CONA</p>
+      <h1>Recursos</h1>
+      <p class="page-hero-lede">Normativa, investigación, redes internacionales, revistas y material
+        educativo sobre el océano y su cultura en Chile, reunidos en un solo índice.</p>
+    </div>
+    <svg class="hero-wave hero-wave--small" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,48 C 240,82 480,8 720,38 C 960,68 1200,15 1440,45 L1440,90 L0,90 Z" fill="var(--color-foam)"/>
+    </svg>
+  </section>
+
+  <section class="resources-body">
+    <div class="resource-search-bar reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="search-icon"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="search" id="resourceSearch" placeholder="Busca por institución, tema o palabra clave&hellip;" aria-label="Buscar recursos">
+    </div>
+    <p class="resource-result-count" id="resultCount"></p>
+
+    <div id="resourceList" class="resource-accordion"></div>
+
+    <p class="resource-empty-state is-hidden" id="emptyState">
+      No encontramos coincidencias. Prueba con otra palabra, o
+      <a href="mailto:contacto@cidemar.org">sugiérenos un recurso</a>.
+    </p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <a class="brand brand--footer" href="index.html">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <path d="M4 24c4-6 8-6 12 0s8 6 12 0s8-6 12 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M4 30c4-6 8-6 12 0s8 6 12 0s8-6 12 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+      </svg>
+      <span>Cultura Oceánica</span>
+    </a>
+    <div class="footer-contact">
+      <a href="https://www.fundacioncidemar.org/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>
+        fundacioncidemar.org
+      </a>
+      <a href="https://www.instagram.com/fundacioncidemar/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+        @fundacioncidemar
+      </a>
+    </div>
+  </div>
+  <p class="footer-copy">Fundación CIDEMAR &middot; Cultura Oceánica &middot; Chile</p>
+</footer>
+
+<script src="resources-data.js"></script>
+<script src="recursos.js"></script>
+</body>
+</html>
