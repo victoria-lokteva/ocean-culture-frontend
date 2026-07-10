@@ -1088,3 +1088,26 @@ h1, h2{
 .news-card a:hover{
     text-decoration:underline;
 }
+
+
+/* ----------------------------------------
+   Responsive (MÓVIL)
+---------------------------------------- */
+@media (max-width: 900px){
+
+  .site-nav{
+    display: none;
+  }
+
+  .site-header{
+    padding: 0.8rem 1rem;
+  }
+
+  .hero h1{
+    font-size: 2.5rem;
+    line-height: 1.1;
+  }
+
+  .hero{
+    padding-top: 120px;
+  }
