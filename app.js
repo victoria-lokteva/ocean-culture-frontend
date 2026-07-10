@@ -170,3 +170,37 @@ fetch(API)
     mapStatus.classList.add('is-error');
     mapStatus.textContent = 'No pudimos cargar el mapa. Intenta recargar la página en unos segundos.';
   });
+
+
+/* ---------------------------------------------------
+   News
+--------------------------------------------------- */
+
+const newsContainer = document.getElementById("newsContainer");
+fetch(NEWS_URL)
+  .then(response => response.json())
+  .then(news => {
+
+    newsContainer.innerHTML = "";
+
+    news.forEach(item => {
+
+      newsContainer.innerHTML += `
+        <article class="news-card">
+          <h3>${item.title}</h3>
+          <p>${item.summary}</p>
+          <a href="${item.link}" target="_blank">
+            Leer noticia →
+          </a>
+        </article>
+      `;
+
+    });
+
+  })
+  .catch(error => {
+    console.error(error);
+
+    newsContainer.innerHTML =
+      "<p>No fue posible cargar las noticias.</p>";
+  });
