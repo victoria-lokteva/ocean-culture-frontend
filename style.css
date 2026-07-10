@@ -1,6 +1,3 @@
-/* ---------------------------------------------------
-   Tokens
---------------------------------------------------- */
 :root{
   --color-abyss: #0B2E38;
   --color-ocean: #12586E;
@@ -30,7 +27,7 @@ body{
   margin: 0;
   font-family: var(--font-body);
   color: var(--color-ink);
-  background: var(--color-foam);
+  background: #ffffff;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -62,6 +59,8 @@ h1, h2{
   z-index: 50;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  row-gap: 0.6rem;
   justify-content: space-between;
   padding: 1.1rem 2rem;
   color: var(--color-foam);
@@ -82,13 +81,34 @@ h1, h2{
   font-weight: 600;
   font-size: 1.05rem;
 }
-.brand-mark{ width: 28px; height: 28px; color: var(--color-sand); }
+.brand-mark{ width: 28px; height: 28px; color: var(--color-sand); flex-shrink: 0; }
 
-.site-nav{ display: flex; gap: 1.75rem; }
+.brand-text{
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  line-height: 1.1;
+}
+.brand-kicker{
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: none;
+  opacity: 0.78;
+  white-space: nowrap;
+  margin-left: 1cm;
+}
+.brand-title{
+  white-space: nowrap;
+}
+
+.site-nav{ display: flex; align-items: center; flex-wrap: wrap; gap: 1.1rem 1.35rem; justify-content: flex-end; }
 .site-nav a{
   text-decoration: none;
-  font-size: 0.92rem;
+  font-size: 0.85rem;
   font-weight: 500;
+  white-space: nowrap;
   opacity: 0.9;
   border-bottom: 1px solid transparent;
   padding-bottom: 2px;
@@ -824,8 +844,8 @@ h1, h2{
 }
 
 .portal-text h2{
-    color:var(--color-ocean);
-    font-size:2.2rem;
+    color:var(--color-abyss);
+    font-size:clamp(1.9rem, 3.4vw, 2.6rem);
     margin-bottom:1rem;
 }
 
@@ -890,9 +910,9 @@ h1, h2{
 }
 
 .why-group h2{
-    color:var(--color-ocean);
-    font-size:clamp(2rem,4vw,2.7rem);
-    margin-bottom:2rem;
+    color:var(--color-abyss);
+    font-size:clamp(1.9rem, 3.4vw, 2.6rem);
+    margin-bottom:1.5rem;
 }
 
 .why-group p{
@@ -932,8 +952,8 @@ h1, h2{
 }
 
 .members-header h2{
-    color:var(--color-ocean);
-    font-size:clamp(2rem,4vw,2.7rem);
+    color:var(--color-abyss);
+    font-size:clamp(1.9rem, 3.4vw, 2.6rem);
 }
 
 .members-grid{
@@ -1005,8 +1025,8 @@ h1, h2{
 }
 
 .action-lines-header h2{
-    color:var(--color-ocean);
-    font-size:clamp(2rem,4vw,2.7rem);
+    color:var(--color-abyss);
+    font-size:clamp(1.9rem, 3.4vw, 2.6rem);
 }
 
 .action-grid{
@@ -1021,7 +1041,7 @@ h1, h2{
 }
 
 .action-card h3{
-    color:var(--color-ocean);
+    color:var(--color-abyss);
     font-family:var(--font-display);
     font-size:1.6rem;
     margin-bottom:1rem;
@@ -1054,8 +1074,8 @@ h1, h2{
 }
 
 .news-header h2{
-    color:var(--color-ocean);
-    font-size:clamp(2rem,4vw,2.7rem);
+    color:var(--color-abyss);
+    font-size:clamp(1.9rem, 3.4vw, 2.6rem);
 }
 
 .news-card{
