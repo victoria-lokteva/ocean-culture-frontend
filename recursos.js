@@ -7,17 +7,78 @@ window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
 /* ---------------------------------------------------
-   Render accordion from RESOURCE_CATEGORIES
+   Load categories from Google Sheets, with a local
+   fallback (resources-data.js) if the sheet can't be reached.
+
+   Sheet columns expected in "Hoja1":
+     orden | categoria | descripcion_categoria | texto_enlace | url
+--------------------------------------------------- */
+const SHEET_ID = "1ZUlUOLows-_gckQPBi726IE9eXqkBFzwcj2SfNCe00I";
+const SHEET_TAB = "Hoja1";
+const SHEET_URL = `https://opensheet.elk.sh/${SHEET_ID}/${SHEET_TAB}`;
+
+function rowsToCategories(rows){
+  const byOrder = new Map();
+
+  rows.forEach(row => {
+    const order = Number(row.orden) || 0;
+    const title = (row.categoria || '').trim();
+    if (!title) return;
+
+    const intro = (row.descripcion_categoria || '').trim();
+    const label = (row.texto_enlace || '').trim();
+    const url = (row.url || '').trim();
+
+    if (!byOrder.has(title)){
+      byOrder.set(title, {
+        id: title.toLowerCase()
+          .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/(^-|-$)/g, ''),
+        title,
+        order,
+        intro: intro || '',
+        items: [],
+      });
+    }
+
+    const cat = byOrder.get(title);
+    if (order) cat.order = Math.min(cat.order || order, order);
+    if (intro && !cat.intro) cat.intro = intro;
+    if (label) cat.items.push({ label, url: url || null });
+  });
+
+  return Array.from(byOrder.values()).sort((a, b) => a.order - b.order);
+}
+
+async function loadCategories(){
+  try {
+    const response = await fetch(SHEET_URL);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const rows = await response.json();
+    const categories = rowsToCategories(rows);
+    if (!categories.length) throw new Error('Sheet returned no usable rows');
+    return categories;
+  } catch (error) {
+    console.warn('No se pudo cargar la hoja de recursos, usando datos locales de respaldo.', error);
+    return RESOURCE_CATEGORIES; // from resources-data.js, loaded as a <script> before this file
+  }
+}
+
+/* ---------------------------------------------------
+   Render accordion
 --------------------------------------------------- */
 const list = document.getElementById('resourceList');
 const searchInput = document.getElementById('resourceSearch');
 const resultCount = document.getElementById('resultCount');
 const emptyState = document.getElementById('emptyState');
 
+let CATEGORIES = [];
+
 const iconExternal = `<svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M6 3H3v10h10V10M9 3h4v4M13 3L7 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 function totalLinkCount(){
-  return RESOURCE_CATEGORIES.reduce((sum, cat) => sum + cat.items.filter(i => i.url).length, 0);
+  return CATEGORIES.reduce((sum, cat) => sum + cat.items.filter(i => i.url).length, 0);
 }
 
 function renderCategory(cat, open){
@@ -69,12 +130,13 @@ function renderCategory(cat, open){
   return details;
 }
 
-function renderAll(){
+async function renderAll(){
+  CATEGORIES = await loadCategories();
   list.innerHTML = '';
-  RESOURCE_CATEGORIES.forEach((cat, i) => {
+  CATEGORIES.forEach((cat, i) => {
     list.appendChild(renderCategory(cat, i === 0));
   });
-  resultCount.textContent = `${totalLinkCount()} enlaces en ${RESOURCE_CATEGORIES.length} categorías`;
+  resultCount.textContent = `${totalLinkCount()} enlaces en ${CATEGORIES.length} categorías`;
 }
 
 renderAll();
@@ -101,7 +163,7 @@ function applyFilter(){
       cat.querySelectorAll('.resource-item').forEach(li => { li.style.display = ''; });
     });
     emptyState.classList.add('is-hidden');
-    resultCount.textContent = `${totalLinkCount()} enlaces en ${RESOURCE_CATEGORIES.length} categorías`;
+    resultCount.textContent = `${totalLinkCount()} enlaces en ${CATEGORIES.length} categorías`;
     return;
   }
 
