@@ -44,6 +44,7 @@
 :root{
   --color-abyss: #0B2E38;
   --color-ocean: #12586E;
+  --color-calypso: #1C6E8C;
   --color-foam:  #F2F7F5;
   --color-kelp:  #3D7A5C;
   --color-sand:  #E3A857;
@@ -107,11 +108,11 @@ h1, h2{
   justify-content: space-between;
   padding: 1.1rem 2rem;
   color: var(--color-foam);
-  background: linear-gradient(to bottom, rgba(11,46,56,0.55), rgba(11,46,56,0));
+  background: linear-gradient(to bottom, rgba(28,110,140,0.65), rgba(28,110,140,0));
   transition: background 0.3s ease, backdrop-filter 0.3s ease;
 }
 .site-header.is-scrolled{
-  background: rgba(11,46,56,0.92);
+  background: rgba(20,90,115,0.94);
   backdrop-filter: blur(6px);
 }
 
@@ -125,6 +126,7 @@ h1, h2{
   font-size: 1.05rem;
 }
 .brand-mark{ width: 28px; height: 28px; color: var(--color-sand); flex-shrink: 0; }
+.brand-partner-logo{ height: 30px; width: auto; flex-shrink: 0; }
 
 .brand-text{
   display: flex;
@@ -250,7 +252,7 @@ h1, h2{
 .map-intro{ max-width: 60ch; margin-bottom: 2rem; }
 .map-intro h2{
   font-size: clamp(1.9rem, 3.4vw, 2.6rem);
-  color: var(--color-abyss);
+  color: var(--color-calypso);
   margin-bottom: 1rem;
 }
 .map-intro p{
@@ -392,7 +394,7 @@ h1, h2{
 .resources-teaser-text{ max-width: 56ch; }
 .resources-teaser-text h2{
   font-size: clamp(1.6rem, 2.8vw, 2.1rem);
-  color: var(--color-abyss);
+  color: var(--color-calypso);
   margin: 0.4rem 0 0.75rem;
 }
 .resources-teaser-text p{
@@ -418,7 +420,7 @@ h1, h2{
 }
 .principles-intro h2{
   font-size: clamp(1.9rem, 3.4vw, 2.6rem);
-  color: var(--color-abyss);
+  color: var(--color-calypso);
 }
 
 .principles-grid{
@@ -823,7 +825,7 @@ h1, h2{
 }
 
 .portal-text h2{
-    color:var(--color-abyss);
+    color:var(--color-calypso);
     font-size:clamp(1.9rem, 3.4vw, 2.6rem);
     margin-bottom:1rem;
 }
@@ -889,7 +891,7 @@ h1, h2{
 }
 
 .why-group h2{
-    color:var(--color-abyss);
+    color:var(--color-calypso);
     font-size:clamp(1.9rem, 3.4vw, 2.6rem);
     margin-bottom:1.5rem;
 }
@@ -931,7 +933,7 @@ h1, h2{
 }
 
 .members-header h2{
-    color:var(--color-abyss);
+    color:var(--color-calypso);
     font-size:clamp(1.9rem, 3.4vw, 2.6rem);
 }
 
@@ -1004,7 +1006,7 @@ h1, h2{
 }
 
 .action-lines-header h2{
-    color:var(--color-abyss);
+    color:var(--color-calypso);
     font-size:clamp(1.9rem, 3.4vw, 2.6rem);
 }
 
@@ -1053,7 +1055,7 @@ h1, h2{
 }
 
 .news-header h2{
-    color:var(--color-abyss);
+    color:var(--color-calypso);
     font-size:clamp(1.9rem, 3.4vw, 2.6rem);
 }
 
