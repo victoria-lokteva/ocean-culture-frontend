@@ -125,11 +125,25 @@ function renderLegend(counts){
   });
 }
 
-fetch(API)
-  .then(response => {
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return response.json();
-  })
+function fetchMapData(attempt = 1){
+  // cache:'no-store' + a cache-busting param avoid the browser/CDN serving a
+  // stale cached response (e.g. a 404 cached from right after a deploy) —
+  // this is the most common cause of "no se pudo cargar" on a page that
+  // actually has valid data.
+  return fetch(`${API}?v=${Date.now()}`, { cache: 'no-store' })
+    .then(response => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    })
+    .catch(error => {
+      if (attempt < 2){
+        return new Promise(resolve => setTimeout(resolve, 600)).then(() => fetchMapData(attempt + 1));
+      }
+      throw error;
+    });
+}
+
+fetchMapData()
   .then(data => {
     const counts = {};
     const cities = new Set();
@@ -177,6 +191,20 @@ fetch(API)
 --------------------------------------------------- */
 const newsContainer = document.getElementById("newsContainer");
 
+
+function normalizeImageUrl(raw){
+  const url = (raw || '').trim();
+  if (!url) return '';
+
+  const driveFile = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
+  if (driveFile) return `https://drive.google.com/uc?export=view&id=${driveFile[1]}`;
+
+  const driveOpen = url.match(/drive\.google\.com\/open\?id=([^&]+)/);
+  if (driveOpen) return `https://drive.google.com/uc?export=view&id=${driveOpen[1]}`;
+
+  return url;
+}
+
 fetch(NEWS_URL)
   .then(response => response.json())
   .then(news => {
@@ -185,13 +213,15 @@ fetch(NEWS_URL)
 
     news.forEach(item => {
 
-      const imageHtml = item.image && item.image.trim() !== ""
+      const imageUrl = normalizeImageUrl(item.image);
+      const imageHtml = imageUrl
         ? `
           <img
-            src="${item.image}"
+            src="${imageUrl}"
             alt="${item.title}"
             class="news-image"
-            loading="lazy">
+            loading="lazy"
+            onerror="this.remove()">
         `
         : "";
 
@@ -199,9 +229,9 @@ fetch(NEWS_URL)
         <article class="news-card">
           <h3>${item.title}</h3>
 
-          <p>${item.summary}</p>
-
           ${imageHtml}
+
+          <p>${item.summary}</p>
 
           <a href="${item.link}" target="_blank" rel="noopener">
             Leer noticia →

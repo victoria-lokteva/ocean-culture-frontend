@@ -1073,6 +1073,17 @@ h1, h2{
     font-size:1.5rem;
 }
 
+.news-image{
+    display:block;
+    width:100%;
+    max-width:420px;
+    height:220px;
+    object-fit:cover;
+    border-radius:12px;
+    margin:0 0 1rem;
+    box-shadow:0 8px 20px rgba(11,46,56,.12);
+}
+
 .news-card p{
     margin:0 0 1rem;
     color:#33484D;
