@@ -1,4 +1,4 @@
-const API = "https://ocean-culture.onrender.com/organizations";
+const API = "data/organizations.json";
 const NEWS_URL =
 "https://opensheet.elk.sh/1SCBaht6OcwNptYAcOvwzP6srdEnBP26hJ9zJZX2bMEs/Hoja1";
 
