@@ -175,8 +175,8 @@ fetch(API)
 /* ---------------------------------------------------
    News
 --------------------------------------------------- */
-
 const newsContainer = document.getElementById("newsContainer");
+
 fetch(NEWS_URL)
   .then(response => response.json())
   .then(news => {
@@ -185,11 +185,25 @@ fetch(NEWS_URL)
 
     news.forEach(item => {
 
+      const imageHtml = item.image && item.image.trim() !== ""
+        ? `
+          <img
+            src="${item.image}"
+            alt="${item.title}"
+            class="news-image"
+            loading="lazy">
+        `
+        : "";
+
       newsContainer.innerHTML += `
         <article class="news-card">
           <h3>${item.title}</h3>
+
           <p>${item.summary}</p>
-          <a href="${item.link}" target="_blank">
+
+          ${imageHtml}
+
+          <a href="${item.link}" target="_blank" rel="noopener">
             Leer noticia →
           </a>
         </article>
