@@ -7,9 +7,7 @@ window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
 /* ---------------------------------------------------
-   Load categories from Google Sheets, with a local
-   fallback (resources-data.js) if the sheet can't be reached.
-
+   Load categories from Google Sheets
    Sheet columns expected in "Hoja1":
      orden | categoria | descripcion_categoria | texto_enlace | url
 --------------------------------------------------- */
@@ -52,17 +50,12 @@ function rowsToCategories(rows){
 }
 
 async function loadCategories(){
-  try {
-    const response = await fetch(SHEET_URL);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const rows = await response.json();
-    const categories = rowsToCategories(rows);
-    if (!categories.length) throw new Error('Sheet returned no usable rows');
-    return categories;
-  } catch (error) {
-    console.warn('No se pudo cargar la hoja de recursos, usando datos locales de respaldo.', error);
-    return RESOURCE_CATEGORIES; // from resources-data.js, loaded as a <script> before this file
-  }
+  const response = await fetch(SHEET_URL);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const rows = await response.json();
+  const categories = rowsToCategories(rows);
+  if (!categories.length) throw new Error('Sheet returned no usable rows');
+  return categories;
 }
 
 /* ---------------------------------------------------
@@ -131,7 +124,16 @@ function renderCategory(cat, open){
 }
 
 async function renderAll(){
-  CATEGORIES = await loadCategories();
+  try {
+    CATEGORIES = await loadCategories();
+  } catch (error) {
+    console.error('No se pudo cargar la hoja de recursos.', error);
+    list.innerHTML = '';
+    resultCount.textContent = '';
+    emptyState.classList.remove('is-hidden');
+    emptyState.innerHTML = 'No pudimos cargar los recursos en este momento. Intenta recargar la página en unos segundos.';
+    return;
+  }
   list.innerHTML = '';
   CATEGORIES.forEach((cat, i) => {
     list.appendChild(renderCategory(cat, i === 0));
@@ -141,9 +143,6 @@ async function renderAll(){
 
 renderAll();
 
-/* ---------------------------------------------------
-   Live search: filters items, opens matching categories
---------------------------------------------------- */
 let debounceTimer;
 searchInput.addEventListener('input', () => {
   clearTimeout(debounceTimer);
