@@ -6,6 +6,31 @@ const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 4
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
+/* Mobile  menu */
+const navToggle = document.getElementById('navToggle');
+const siteNav = document.getElementById('siteNav');
+const navOverlay = document.getElementById('navOverlay');
+
+function closeNav(){
+  siteNav.classList.remove('is-open');
+  navOverlay.classList.remove('is-open');
+  navToggle.setAttribute('aria-expanded', 'false');
+  document.body.classList.remove('nav-locked');
+}
+function openNav(){
+  siteNav.classList.add('is-open');
+  navOverlay.classList.add('is-open');
+  navToggle.setAttribute('aria-expanded', 'true');
+  document.body.classList.add('nav-locked');
+}
+if (navToggle && siteNav && navOverlay){
+  navToggle.addEventListener('click', () => {
+    siteNav.classList.contains('is-open') ? closeNav() : openNav();
+  });
+  navOverlay.addEventListener('click', closeNav);
+  siteNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+}
+
 /* ---------------------------------------------------
    Load categories from Google Sheets
    Sheet columns expected in "Hoja1":

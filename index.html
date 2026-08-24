@@ -31,7 +31,7 @@
       <span class="brand-title">Cultura Oceánica</span>
     </span>
   </a>
-  <nav class="site-nav">
+  <nav class="site-nav" id="siteNav">
     <a href="#portal">Portal</a>
     <a href="#principios">Principios</a>
     <a href="#noticias">Noticias</a>
@@ -41,6 +41,12 @@
     <a href="#mapa">Mapa</a>
     <a href="recursos.html">Recursos</a>
   </nav>
+
+  <button class="nav-toggle" id="navToggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="siteNav">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="nav-overlay" id="navOverlay"></div>
 </header>
 
 <main id="top">
@@ -296,17 +302,9 @@
 
 <footer class="site-footer">
   <div class="footer-inner">
-    <a class="brand brand--footer" href="#top">
-      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
-        <path d="M4 24c4-6 8-6 12 0s8 6 12 0s8-6 12 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-        <path d="M4 30c4-6 8-6 12 0s8 6 12 0s8-6 12 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
-      </svg>
-      <span>Cultura Oceánica</span>
-    </a>
-
     <div class="footer-partner">
       <img src="images/gt-cocean-logo.png" alt="GT-COCEAN · Grupo de Trabajo Cultura Oceánica Chile" width="192" height="300">
-      <span>En colaboración con<br>GT&#8209;COCEAN Chile</span>
+      <span>GT&#8209;COCEAN Chile</span>
     </div>
 
     <div class="footer-contact">
@@ -320,7 +318,7 @@
       </a>
     </div>
   </div>
-  <p class="footer-copy">Fundación CIDEMAR &middot; Cultura Oceánica &middot; Chile</p>
+  <p class="footer-copy">Página web hecha por Fundación CIDEMAR &middot; Cultura Oceánica &middot; Chile</p>
 </footer>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>

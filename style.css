@@ -161,6 +161,48 @@ h1, h2{
 .site-nav a:hover{ border-color: currentColor; }
 
 /* ---------------------------------------------------
+   Mobile menu toggle (hamburger) + off-canvas nav
+--------------------------------------------------- */
+.nav-toggle{
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  flex-shrink: 0;
+  z-index: 61;
+}
+.nav-toggle span{
+  display: block;
+  width: 24px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+.nav-overlay{
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(7,20,25,0.5);
+  z-index: 55;
+}
+.nav-overlay.is-open{ display: block; }
+
+body.nav-locked{ overflow: hidden; }
+
+/* ---------------------------------------------------
    Hero
 --------------------------------------------------- */
 .hero{
@@ -506,7 +548,6 @@ h1, h2{
   padding-bottom: 1.75rem;
   border-bottom: 1px solid rgba(242,247,245,0.12);
 }
-.brand--footer{ color: var(--color-foam); }
 .footer-contact{
   display: flex;
   gap: 1.5rem;
@@ -1116,8 +1157,39 @@ h1, h2{
 ---------------------------------------- */
 @media (max-width: 900px){
 
+  .nav-toggle{
+    display: flex;
+  }
+
   .site-nav{
-    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: min(78vw, 320px);
+    margin: 0;
+    background: rgba(11,46,56,0.98);
+    backdrop-filter: blur(8px);
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0;
+    padding: 6rem 1.75rem 2rem;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 60;
+    color: var(--color-foam);
+  }
+  .site-nav.is-open{
+    transform: translateX(0);
+  }
+  .site-nav a{
+    width: 100%;
+    padding: 0.9rem 0;
+    font-size: 1rem;
+    border-bottom: 1px solid rgba(242,247,245,0.12);
+    opacity: 1;
   }
 
   .site-header{
