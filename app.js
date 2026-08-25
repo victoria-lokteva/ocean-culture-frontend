@@ -212,6 +212,116 @@ fetchMapData()
 
 
 /* ---------------------------------------------------
+   Miembros
+   Columnas  en la hoja "Miembros":
+     orden | nombre | foto | link_cv
+--------------------------------------------------- */
+const MEMBERS_SHEET_ID = "1DrBYkImwnSo9uYMCdKwXiSlDrLx2ZFO5ycnoBnFOkPM";
+const MEMBERS_SHEET_TAB = "Miembros";
+const MEMBERS_URL = `https://opensheet.elk.sh/${MEMBERS_SHEET_ID}/${MEMBERS_SHEET_TAB}`;
+
+const membersGrid = document.getElementById('membersGrid');
+const membersStatus = document.getElementById('membersStatus');
+
+function initials(name){
+  return (name || '')
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map(word => word[0])
+    .join('')
+    .toUpperCase();
+}
+
+function buildAvatarFallback(name){
+  const div = document.createElement('div');
+  div.className = 'member-avatar-fallback';
+  div.textContent = initials(name);
+  return div;
+}
+
+function buildMemberCard(member){
+  const name = (member.nombre || '').trim();
+  const photo = normalizeImageUrl(member.foto);
+  const cvUrl = (member.link_cv || '').trim();
+
+  const card = document.createElement('div');
+  card.className = 'member-card';
+
+  if (photo){
+    const img = document.createElement('img');
+    img.src = photo;
+    img.alt = name;
+    img.loading = 'lazy';
+    img.addEventListener('error', () => img.replaceWith(buildAvatarFallback(name)));
+    card.appendChild(img);
+  } else {
+    card.appendChild(buildAvatarFallback(name));
+  }
+
+  const h3 = document.createElement('h3');
+  h3.textContent = name;
+  card.appendChild(h3);
+
+  if (cvUrl){
+    const link = document.createElement('a');
+    link.className = 'member-cv-link';
+    link.href = cvUrl;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.textContent = 'Ver CV';
+    card.appendChild(link);
+  }
+
+  return card;
+}
+
+function fetchMembers(attempt = 1){
+  return fetch(`${MEMBERS_URL}?v=${Date.now()}`, { cache: 'no-store' })
+    .then(response => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    })
+    .catch(error => {
+      if (attempt < 2){
+        return new Promise(resolve => setTimeout(resolve, 600)).then(() => fetchMembers(attempt + 1));
+      }
+      throw error;
+    });
+}
+
+if (membersGrid){
+  fetchMembers()
+    .then(rows => {
+      const members = rows
+        .filter(row => (row.nombre || '').trim())
+        .sort((a, b) => (Number(a.orden) || 0) - (Number(b.orden) || 0));
+
+      membersGrid.innerHTML = '';
+      members.forEach(member => membersGrid.appendChild(buildMemberCard(member)));
+
+      if (membersStatus){
+        if (members.length){
+          membersStatus.classList.add('is-hidden');
+        } else {
+          membersStatus.classList.remove('is-hidden');
+          membersStatus.classList.add('is-error');
+          membersStatus.textContent = 'Todavía no hay miembros cargados en la hoja.';
+        }
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      if (membersStatus){
+        membersStatus.classList.remove('is-hidden');
+        membersStatus.classList.add('is-error');
+        membersStatus.textContent = 'No pudimos cargar los miembros. Intenta recargar la página en unos segundos.';
+      }
+    });
+}
+
+
+/* ---------------------------------------------------
    News
 --------------------------------------------------- */
 const newsContainer = document.getElementById("newsContainer");

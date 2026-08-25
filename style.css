@@ -1004,6 +1004,24 @@ body.nav-locked{ overflow: hidden; }
     box-shadow:0 18px 36px rgba(11,46,56,.20);
 }
 
+.member-avatar-fallback{
+    width:220px;
+    height:220px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:16px;
+    border:5px solid #fff;
+    box-shadow:0 12px 28px rgba(11,46,56,.14);
+    background:var(--color-ocean);
+    color:#fff;
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:2.6rem;
+    letter-spacing:0.02em;
+}
+
 .member-card h3{
     margin-top:1rem;
     font-family:var(--font-display);
@@ -1012,6 +1030,34 @@ body.nav-locked{ overflow: hidden; }
     color:var(--color-abyss);
     letter-spacing:-0.01em;
 }
+
+.member-cv-link{
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+    margin-top:0.6rem;
+    padding:0.4rem 0.95rem;
+    border-radius:999px;
+    background:rgba(18,88,110,0.08);
+    color:var(--color-ocean);
+    font-size:0.85rem;
+    font-weight:600;
+    text-decoration:none;
+    transition:background 0.2s ease;
+}
+.member-cv-link:hover{
+    background:rgba(18,88,110,0.16);
+}
+
+.members-status{
+    text-align:center;
+    font-family:var(--font-mono);
+    font-size:0.85rem;
+    color:var(--color-mist);
+    margin-top:2rem;
+}
+.members-status.is-hidden{ display:none; }
+.members-status.is-error{ color:#A6432F; }
 
 @media (max-width:900px){
     .members-grid{
@@ -1024,9 +1070,13 @@ body.nav-locked{ overflow: hidden; }
         grid-template-columns:1fr;
     }
 
-    .member-card img{
+    .member-card img,
+    .member-avatar-fallback{
         width:180px;
         height:180px;
+    }
+    .member-avatar-fallback{
+        font-size:2.1rem;
     }
 }
 
