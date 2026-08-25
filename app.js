@@ -277,14 +277,15 @@ function buildMemberCard(member){
 }
 
 function fetchMembers(attempt = 1){
-  return fetch(`${MEMBERS_URL}?v=${Date.now()}`, { cache: 'no-store' })
+  return fetch(MEMBERS_URL)
     .then(response => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.json();
     })
     .catch(error => {
       if (attempt < 2){
-        return new Promise(resolve => setTimeout(resolve, 600)).then(() => fetchMembers(attempt + 1));
+        return new Promise(resolve => setTimeout(resolve, 600))
+          .then(() => fetchMembers(attempt + 1));
       }
       throw error;
     });
