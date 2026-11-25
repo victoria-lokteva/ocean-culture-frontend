@@ -33,11 +33,12 @@ if (navToggle && siteNav && navOverlay){
 
 /* ---------------------------------------------------
    Load categories from Google Sheets
-   Sheet columns expected in "Hoja1":
+   Sheet columns expected in the FIRST tab of the spreadsheet:
      orden | categoria | descripcion_categoria | texto_enlace | url
 --------------------------------------------------- */
 const SHEET_ID = "1ZUlUOLows-_gckQPBi726IE9eXqkBFzwcj2SfNCe00I";
-const SHEET_TAB = "Hoja1";
+// opensheet accepts a 1-based tab index, so renaming the tab won't break the page.
+const SHEET_TAB = "1";
 const SHEET_URL = `https://opensheet.elk.sh/${SHEET_ID}/${SHEET_TAB}`;
 
 function rowsToCategories(rows){
