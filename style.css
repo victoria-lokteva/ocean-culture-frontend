@@ -980,21 +980,30 @@ body.nav-locked{ overflow: hidden; }
 
 .members-grid{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:3rem 2rem;
+    grid-template-columns:repeat(4,1fr);
+    gap:2.5rem 1.75rem;
 }
 
 .member-card{
     text-align:center;
 }
 
-.member-card img{
-    width:220px;
-    height:220px;
+.member-card img,
+.member-photo,
+.member-avatar-fallback{
+    display:block;
+    width:100%;
+    max-width:230px;
+    aspect-ratio:1 / 1;
+    margin:0 auto;
     object-fit:cover;
     border-radius:16px;
     border:5px solid #fff;
     box-shadow:0 12px 28px rgba(11,46,56,.14);
+}
+
+.member-card img{
+    animation:gallery-fade .4s ease;
     transition:transform .25s ease,
                box-shadow .25s ease;
 }
@@ -1004,16 +1013,16 @@ body.nav-locked{ overflow: hidden; }
     box-shadow:0 18px 36px rgba(11,46,56,.20);
 }
 
+.member-photo.is-loading{
+    background:linear-gradient(100deg, #e4eeec 30%, #f4f8f7 50%, #e4eeec 70%);
+    background-size:200% 100%;
+    animation:gallery-shimmer 1.4s linear infinite;
+}
+
 .member-avatar-fallback{
-    width:220px;
-    height:220px;
-    margin:0 auto;
     display:flex;
     align-items:center;
     justify-content:center;
-    border-radius:16px;
-    border:5px solid #fff;
-    box-shadow:0 12px 28px rgba(11,46,56,.14);
     background:var(--color-ocean);
     color:#fff;
     font-family:var(--font-display);
@@ -1059,24 +1068,240 @@ body.nav-locked{ overflow: hidden; }
 .members-status.is-hidden{ display:none; }
 .members-status.is-error{ color:#A6432F; }
 
+/* Foto clickeable → biografía */
+.member-photo-btn{
+    display:block;
+    width:100%;
+    max-width:230px;
+    margin:0 auto;
+    padding:0;
+    border:0;
+    background:none;
+    border-radius:16px;
+    cursor:pointer;
+}
+.member-photo-btn img,
+.member-photo-btn .member-photo,
+.member-photo-btn .member-avatar-fallback{
+    transition:transform .25s ease, box-shadow .25s ease;
+}
+.member-photo-btn:hover img,
+.member-photo-btn:hover .member-avatar-fallback,
+.member-photo-btn:focus-visible img,
+.member-photo-btn:focus-visible .member-avatar-fallback{
+    transform:translateY(-6px);
+    box-shadow:0 18px 36px rgba(11,46,56,.20);
+}
+.member-photo-btn:focus-visible{
+    outline:3px solid var(--color-sand);
+    outline-offset:4px;
+}
+.member-card > img:hover{ transform:none; }   /* sin biografía: la foto no se mueve */
+
+.member-bio-link{
+    margin-top:0.55rem;
+    padding:0.35rem 0.9rem;
+    border:0;
+    border-radius:999px;
+    background:rgba(18,88,110,0.08);
+    color:var(--color-ocean);
+    font-family:var(--font-body);
+    font-size:0.8rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:background .2s ease;
+}
+.member-bio-link:hover,
+.member-bio-link:focus-visible{ background:rgba(18,88,110,0.16); }
+
+/* Ventana de biografía */
+.member-dialog{
+    width:min(920px, calc(100vw - 2rem));
+    max-width:none;
+    max-height:calc(100dvh - 2rem);
+    padding:0;
+    border:0;
+    background:transparent;
+    overflow:visible;
+}
+.member-dialog::backdrop{
+    background:rgba(7,28,34,.78);
+    backdrop-filter:blur(3px);
+}
+.member-dialog[open]{ animation:member-dialog-in .28s ease; }
+@keyframes member-dialog-in{
+    from{ opacity:0; transform:translateY(14px); }
+    to{ opacity:1; transform:none; }
+}
+
+.member-dialog-card{
+    position:relative;
+    display:grid;
+    grid-template-columns:280px 1fr;
+    max-height:calc(100dvh - 2rem);
+    background:#fff;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 30px 70px rgba(0,0,0,.35);
+}
+
+.member-dialog-photo{
+    padding:2.25rem 1.75rem;
+    background:linear-gradient(165deg, var(--color-calypso) 0%, var(--color-ocean) 45%, var(--color-abyss) 100%);
+}
+.member-dialog-photo img,
+.member-dialog-photo .member-avatar-fallback{
+    display:block;
+    width:100%;
+    max-width:none;
+    aspect-ratio:1 / 1;
+    object-fit:cover;
+    border-radius:16px;
+    border:5px solid #fff;
+    box-shadow:0 14px 30px rgba(0,0,0,.25);
+}
+.member-dialog-photo .member-avatar-fallback{
+    display:flex;
+    background:rgba(242,247,245,.12);
+    font-size:3.4rem;
+}
+
+.member-dialog-body{
+    padding:2.6rem 2.75rem 2.25rem;
+    overflow-y:auto;
+}
+
+.member-dialog-institution{
+    margin:0 2.5rem 0.65rem 0;
+    font-family:var(--font-mono);
+    font-size:0.74rem;
+    line-height:1.5;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--color-kelp);
+}
+
+.member-dialog-name{
+    margin:0 2.5rem 1.4rem 0;
+    color:var(--color-calypso);
+    font-size:clamp(1.6rem, 3vw, 2.2rem);
+    line-height:1.15;
+}
+.member-dialog-name::after{
+    content:"";
+    display:block;
+    width:56px;
+    height:3px;
+    margin-top:1rem;
+    border-radius:3px;
+    background:var(--color-sand);
+}
+
+.member-dialog-bio p{
+    margin:0 0 0.95rem;
+    color:var(--color-ink);
+    font-size:1rem;
+    line-height:1.7;
+}
+
+.member-dialog-links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.5rem;
+    margin-top:1.5rem;
+    padding-top:1.25rem;
+    border-top:1px solid rgba(18,88,110,.12);
+}
+.member-dialog-links[hidden]{ display:none; }
+.member-dialog-links a{
+    display:inline-flex;
+    align-items:center;
+    gap:0.4rem;
+    padding:0.45rem 1rem;
+    border-radius:999px;
+    background:rgba(18,88,110,0.08);
+    color:var(--color-ocean);
+    font-size:0.85rem;
+    font-weight:600;
+    text-decoration:none;
+    transition:background .2s ease, color .2s ease;
+}
+.member-dialog-links a:hover,
+.member-dialog-links a:focus-visible{
+    background:var(--color-ocean);
+    color:#fff;
+}
+
+.member-dialog-close{
+    position:absolute;
+    top:0.9rem;
+    right:0.9rem;
+    z-index:1;
+    width:40px;
+    height:40px;
+    border:0;
+    border-radius:50%;
+    background:rgba(18,88,110,0.08);
+    color:var(--color-abyss);
+    font-size:1.7rem;
+    line-height:1;
+    cursor:pointer;
+    transition:background .2s ease;
+}
+.member-dialog-close:hover,
+.member-dialog-close:focus-visible{ background:rgba(18,88,110,0.18); }
+.member-dialog-close:focus{ outline:none; }
+.member-dialog-close:focus-visible{ outline:2px solid var(--color-sand); outline-offset:2px; }
+
+@media (max-width:700px){
+    .member-dialog{
+        width:calc(100vw - 1rem);
+        max-height:calc(100dvh - 1rem);
+    }
+    .member-dialog-card{
+        grid-template-columns:1fr;
+        max-height:calc(100dvh - 1rem);
+        overflow-y:auto;
+    }
+    .member-dialog-photo{
+        display:flex;
+        justify-content:center;
+        padding:1.75rem 1rem 1.5rem;
+    }
+    .member-dialog-photo img,
+    .member-dialog-photo .member-avatar-fallback{
+        width:160px;
+    }
+    .member-dialog-body{
+        padding:1.6rem 1.25rem 1.75rem;
+        overflow:visible;
+    }
+    .member-dialog-close{
+        background:rgba(255,255,255,.9);
+    }
+    .member-dialog-institution,
+    .member-dialog-name{ margin-right:0; }
+}
+
 @media (max-width:900px){
     .members-grid{
-        grid-template-columns:repeat(2,1fr);
+        grid-template-columns:repeat(3,1fr);
     }
 }
 
 @media (max-width:600px){
+    .members{
+        padding:3.5rem 1rem 4rem;
+    }
     .members-grid{
-        grid-template-columns:1fr;
+        grid-template-columns:repeat(2,1fr);
+        gap:1.75rem 1rem;
     }
-
-    .member-card img,
-    .member-avatar-fallback{
-        width:180px;
-        height:180px;
+    .member-card h3{
+        font-size:1.05rem;
     }
     .member-avatar-fallback{
-        font-size:2.1rem;
+        font-size:2rem;
     }
 }
 
